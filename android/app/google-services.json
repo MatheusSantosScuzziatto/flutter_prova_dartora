@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "178297860432",
+    "firebase_url": "https://provapautora.firebaseio.com",
+    "project_id": "provapautora",
+    "storage_bucket": "provapautora.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178297860432:android:84c3dae28bc64447957c55",
+        "android_client_info": {
+          "package_name": "com.fag.flutter_prova1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178297860432-1s2evmeknmhullgpq4ha1msqp0jugl11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvP6UrY4e7FO4ZM8JnzMizNnIHei3Hi6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178297860432-1s2evmeknmhullgpq4ha1msqp0jugl11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
