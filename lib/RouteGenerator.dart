@@ -4,6 +4,8 @@ import 'package:flutter_prova1/telas/cadastro.dart';
 import 'package:flutter_prova1/telas/lista.dart';
 import 'package:flutter_prova1/telas/login.dart';
 import 'package:flutter_prova1/telas/mensagens.dart';
+import 'package:flutter_prova1/telas/recuperasenha.dart';
+import 'package:flutter_prova1/telas/splashscreen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -23,6 +25,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Mensagens(args));
       case "/lista":
         return MaterialPageRoute(builder: (_) => Lista());
+      case "/recuperasenha":
+        return MaterialPageRoute(builder: (_) => RecuperaSenha());
+      case "/splash":
+        return MaterialPageRoute(builder: (_) => SplashScreen());
       default:
         _erroRota();
     }

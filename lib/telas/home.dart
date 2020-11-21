@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_prova1/model/quadrosintoma.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Home extends StatefulWidget {
@@ -13,6 +16,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Completer<GoogleMapController> _controller = Completer();
+  CameraPosition _position = CameraPosition(target: LatLng(-24.720739, -53.713464), zoom: 10);
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
   TextEditingController _controllerDssintomas = TextEditingController();
   TextEditingController _controllerPressao = TextEditingController();
 
@@ -35,6 +42,26 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _recuperarDadosUsuario();
+    _recuperarLocalizacao();
+  }
+
+  _onMapCreate(GoogleMapController googleMapController) {
+    _controller.complete(googleMapController);
+  }
+
+  _recuperarLocalizacao() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    final Marker marker = Marker(
+      markerId: MarkerId("marker"),
+      position: LatLng(position.latitude, position.longitude),
+      infoWindow: InfoWindow(title: 'Posicao: '+position.latitude.toString() +' - '+ position.longitude.toString()),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+    );
+    setState(() {
+      _position = CameraPosition(target: LatLng(position.latitude, position.longitude), zoom: 10);
+      markers[MarkerId("marker")] = marker;
+    });
   }
 
   _validaCampos() async {
@@ -260,6 +287,21 @@ class _HomeState extends State<Home> {
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(32))),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text("Localização Atual", textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Container(
+                  height: 300,
+                  child: GoogleMap(
+                      mapType: MapType.normal,
+                      initialCameraPosition: _position,
+                      onMapCreated: _onMapCreate,
+                      markers: Set<Marker>.of(markers.values)
                   ),
                 ),
 
