@@ -38,6 +38,8 @@ class _HomeState extends State<Home> {
   bool _subindoImagem = false;
   String _labelimagens = "Adicione imagens para upload";
 
+  String _mensagemLocalizacao = "";
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +54,23 @@ class _HomeState extends State<Home> {
   _recuperarLocalizacao() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    List<Placemark> listaEnderecos = await Geolocator().placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark endereco = listaEnderecos[0];
+
+    String rua = endereco.thoroughfare;
+    String cep = endereco.postalCode;
+    String cidade = endereco.subAdministrativeArea ;
+    String estado = endereco.administrativeArea;
+    String nr = endereco.subThoroughfare;
+    String textomarker =
+        cep + "\n"
+        + rua + " - " + nr + "\n"
+        + cidade + " - " + estado;
+    setState(() {
+      _mensagemLocalizacao = textomarker;
+    });
+
     final Marker marker = Marker(
       markerId: MarkerId("marker"),
       position: LatLng(position.latitude, position.longitude),
@@ -305,6 +324,13 @@ class _HomeState extends State<Home> {
                       initialCameraPosition: _position,
                       onMapCreated: _onMapCreate,
                       markers: Set<Marker>.of(markers.values)
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    _mensagemLocalizacao,
+                    style: TextStyle(fontSize: 24, color: Colors.black),
+                    textAlign: TextAlign.center,
                   ),
                 ),
 
