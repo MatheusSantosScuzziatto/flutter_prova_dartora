@@ -13,7 +13,7 @@ class InputCustomize extends StatelessWidget {
         this.icon = const Icon(Icons.person),
         this.controller
       }
-      );
+  );
 
   @override
   Widget build(BuildContext context) {

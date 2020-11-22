@@ -66,10 +66,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
   Future _verificarUsuarioLogado() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    FirebaseUser usuarioLogado = await auth.currentUser();
-
     auth.signOut();
 
+    FirebaseUser usuarioLogado = await auth.currentUser();
     if (usuarioLogado != null) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Home()));
@@ -148,7 +147,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           ),
                           InputCustomize(
                             hint: "Senha",
-                            obscure: false,
+                            obscure: true,
                             icon: Icon(Icons.lock),
                             controller: _controllerSenha,
                           ),

@@ -32,6 +32,7 @@ class _ListaState extends State<Lista> {
       quadro.espirro = dados["espirro"];
       quadro.temperatura = dados["temperatura"];
       quadro.descricao = dados["descricao"];
+      quadro.pressao = dados["pressao"];
       quadro.protocolo = dados["protocolo"];
       listaTemporaria.add(quadro);
     }
@@ -77,6 +78,28 @@ class _ListaState extends State<Lista> {
     return ret;
   }
 
+  void _showDialog(Text conteudo) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // retorna um objeto do tipo Dialog
+        return AlertDialog(
+          title: new Text("PROTOCOLO"),
+          content: conteudo,
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,26 +110,27 @@ class _ListaState extends State<Lista> {
         decoration: BoxDecoration(color: Colors.blue),
         padding: EdgeInsets.all(16),
         child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                ListView.builder(
-                    itemCount: _itens.length,
-                    itemBuilder: (context, indice) {
-                      return ListTile (
-                        title: Text(_itens[indice]["id"]),
-                        subtitle: Text(
-                            _itens[indice]["sintomas"]
-                                +"\nTemperatura: "+ _itens[indice]["temperatura"]
-                                +"\nDescrição: "+ _itens[indice]["descricao"]
-                                +"\nPressão: "+ _itens[indice]["pressao"]
-                        ),
-                      );
-                    }
+          child: ListView.builder(
+            itemCount: _itens.length,
+            itemBuilder: (context, indice) {
+              return ListTile (
+                title: Text(_itens[indice]["id"]),
+                subtitle: Text(
+                    _itens[indice]["sintomas"]
                 ),
-              ],
-            ),
+                contentPadding: EdgeInsets.all(9),
+                onTap: () {
+                  _showDialog(
+                    new Text(
+                    _itens[indice]["sintomas"]
+                        +"\nTemperatura: "+ _itens[indice]["temperatura"]
+                        +"\nDescrição: "+ _itens[indice]["descricao"]
+                        +"\nPressão: "+ _itens[indice]["pressao"]
+                    )
+                  );
+                },
+              );
+            }
           ),
         ),
       ),

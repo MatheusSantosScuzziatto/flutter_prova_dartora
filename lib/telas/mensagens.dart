@@ -182,7 +182,7 @@ class _MensagensState extends State<Mensagens> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("imagens/bg.png"), fit: BoxFit.cover)),
+                image: AssetImage("imagens/usuario.png"), fit: BoxFit.cover)),
         child: SafeArea(
             child: Container(
           padding: EdgeInsets.all(8),

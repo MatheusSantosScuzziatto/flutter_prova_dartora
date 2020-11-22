@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
           _mensagemErro = "";
         });
         QuadroSintoma quadro = QuadroSintoma();
-        quadro.protocolo = _idUsuarioLogado + "_" + DateTime.now().toString();
+        quadro.protocolo = _idUsuarioLogado.toString() + "_" + DateTime.now().toString();
         quadro.febre = _febre ? "TRUE" : "FALSE";
         quadro.diarreia = _diarreia ? "TRUE" : "FALSE";
         quadro.coriza = _coriza ? "TRUE" : "FALSE";
@@ -84,6 +84,9 @@ class _HomeState extends State<Home> {
         quadro.pressao = _pressao;
         quadro.descricao = _dssintomas;
         await _cadastrarQuadroSintoma(quadro);
+        setState(() {
+          _mensagemErro = "Protocolo Enviado!";
+        });
       } else {
         setState(() {
           _mensagemErro = "Informe a Temperatura!";
@@ -261,7 +264,7 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.only(bottom: 8),
                   child: TextFormField(
                     controller: _controllerPressao,
-                    autofocus: true,
+                    autofocus: false,
                     keyboardType: TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
@@ -277,7 +280,7 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.only(bottom: 8),
                   child: TextFormField(
                     controller: _controllerDssintomas,
-                    autofocus: true,
+                    autofocus: false,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
